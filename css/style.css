@@ -3,7 +3,6 @@ body{
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     background-color: #E5E5E5;
-    overflow: hidden;
 }
 header{
     z-index: 1;
@@ -92,6 +91,7 @@ footer ion-icon{
     margin-right: 18px;
 }
 aside{
+    overflow: hidden;
     z-index: 2;
     position: relative;
     display: flex;

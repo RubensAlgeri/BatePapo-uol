@@ -36,19 +36,19 @@ function pegarMensagens(){
     mensagens.then(classificarMensagem);
 }
 function classificarMensagem(mensagem){
-    mensagem1.push(mensagem);
+    mensagem1 = mensagem.data;
     let caixaMensagem = document.querySelector('main')
-    for(let i=0;i<mensagem1.length;i++){
+    for(let i=0;i<99;i++){
     if(mensagem1[i].type === 'status'){
-        caixaMensagem.innerHTML += `<article class="entrou-na-sala">
+        caixaMensagem.innerHTML = `<article class="entrou-na-sala">
         <p><em>${mensagem1[i].time}</em>  <strong>${mensagem1[i].from}</strong> para <strong>${mensagem1[i].to}</strong>:  ${mensagem1[i].text}</p>
         </article>`;
     }else if(mensagem1[i].type === 'message'){
-        caixaMensagem.innerHTML += `<article class="mensagem">
+        caixaMensagem.innerHTML = `<article class="mensagem">
         <p><em>${mensagem1[i].time}</em>  <strong>${mensagem1[i].from}</strong> para <strong>${mensagem1[i].to}</strong>:  ${mensagem1[i].text}</p>
         </article>`;
     }else if(mensagem1[i].type === 'private_message'){
-        caixaMensagem.innerHTML += `<article class="mensagem-reservada">
+        caixaMensagem.innerHTML = `<article class="mensagem-reservada">
         <p><em>${mensagem1[i].time}</em>  <strong>${mensagem1[i].from}</strong> para <strong>${mensagem1[i].to}</strong>:  ${mensagem1[i].text}</p>
         </article>`;
     }
@@ -62,5 +62,8 @@ function enviarMensagem(){
                 type: "message"
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    mensagemEnviada.then()
+    mensagemEnviada.then(apagarInput)
+}
+function apagarInput(){
+    document.querySelector("footer input").innerHTML = "";
 }
