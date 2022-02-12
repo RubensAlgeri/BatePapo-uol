@@ -40,24 +40,32 @@ function pegarMensagens(){
 }
 function classificarMensagem(mensagem){
     mensagem1 = mensagem.data;
+    document.querySelector('main').innerHTML = '';
 
-    mensagem1.forEach(mostrarMensagem);
-}
-function mostrarMensagem(mensagem){
-
-    if(mensagem.type === "private_message" && (nomeUsuario === mensagem.to || nomeUsuario === mensagem.from)){
-        document.querySelector('main').innerHTML = `<article class="${mensagem.type}">
-        <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
-        </article>`;
-    }else if(mensagem.to === "Todos"){
-        document.querySelector('main').innerHTML = `<article class="${mensagem.type}">
-        <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
-        </article>`;
+    mensagem1.forEach((element) => {
+        if(nomeUsuario === element.to || nomeUsuario === element.from || element.to === 'Todos'){
+            document.querySelector('main').innerHTML += (`<article class="${element.type}">
+            <p data-identifier="message"><em>${element.time}</em>  <strong>${element.from}</strong> para <strong>${element.to}</strong>:  ${element.text}</p>
+            </article>`);
+    
+    
+        const elementoQueQueroQueApareca = document.querySelector('body');
+        // elementoQueQueroQueApareca.scrollIntoView({block: "end"});
+        }
     }
+)
+}
+// function mostrarMensagem(mensagem){
+//     if(nomeUsuario === mensagem.to || nomeUsuario === mensagem.from || mensagem.to === 'Todos'){
+//         document.querySelector('main').add(`<article class="${mensagem.type}">
+//         <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
+//         </article>`);
 
-    const elementoQueQueroQueApareca = document.querySelector('p');
-    elementoQueQueroQueApareca.scrollIntoView();
-}   
+
+//     const elementoQueQueroQueApareca = document.querySelector('p');
+//     elementoQueQueroQueApareca.scrollIntoView();
+//     }
+// }   
 function enviarMensagem(){
     mensagemAEnviar = {
                 from: nomeUsuario,
@@ -66,7 +74,7 @@ function enviarMensagem(){
                 type: "message"
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    mensagemEnviada.then();
+    mensagemEnviada.then(classificarMensagem);
     mensagemEnviada.catch(recarregarPagina);
     document.querySelector("footer input").value = "";
 }
@@ -78,8 +86,6 @@ window.addEventListener('keyup', event => {
     if (event.code === 'NumpadEnter' || event.code === 'Enter'){
         if(document.querySelector("footer input").value !== ''){
             enviarMensagem();
-        }else if(document.querySelector("aside input").value !== ''){
-            pegarNome();
         }
     }
 });

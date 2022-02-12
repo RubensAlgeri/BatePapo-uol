@@ -28,13 +28,15 @@ header ion-icon{
     margin-right: 21px;
 }
 main{
-    display: flex;
-    flex-direction: column-reverse;
     height: 100vh;
     margin-bottom: 80px;
     margin-top: 106px;
+    overflow-x: hidden;
 }
 article{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
     margin-bottom: 4px;
     padding-top: 15px;
     padding-bottom: 15px;
