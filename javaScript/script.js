@@ -44,10 +44,16 @@ function classificarMensagem(mensagem){
     mensagem1.forEach(mostrarMensagem);
 }
 function mostrarMensagem(mensagem){
-    caixaMensagem = document.querySelector('main')
-    caixaMensagem.innerHTML = `<article class="${mensagem.type}">
-    <p><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
-    </article>`;
+
+    if(mensagem.type === "private_message" && (nomeUsuario === mensagem.to || nomeUsuario === mensagem.from)){
+        document.querySelector('main').innerHTML = `<article class="${mensagem.type}">
+        <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
+        </article>`;
+    }else if(mensagem.to === "Todos"){
+        document.querySelector('main').innerHTML = `<article class="${mensagem.type}">
+        <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
+        </article>`;
+    }
 
     const elementoQueQueroQueApareca = document.querySelector('p');
     elementoQueQueroQueApareca.scrollIntoView();
@@ -60,8 +66,10 @@ function enviarMensagem(){
                 type: "message"
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    mensagemEnviada.then(apagarInput)
-}
-function apagarInput(){
+    mensagemEnviada.then(apagarInput);
+    mensagemEnviada.catch(recarregarPagina);
     document.querySelector("footer input").value = "";
+}
+function recarregarPagina(){
+    window.location.reload();
 }
