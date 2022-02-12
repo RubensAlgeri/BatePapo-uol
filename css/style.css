@@ -14,6 +14,7 @@ header{
     right: 0;
     left: 0;
     height: 80px;
+    margin-bottom: 106px;
     background: #FFFFFF;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
 }
@@ -27,6 +28,8 @@ header ion-icon{
     margin-right: 21px;
 }
 main{
+    display: flex;
+    flex-direction: column-reverse;
     height: 100vh;
     margin-bottom: 80px;
     margin-top: 106px;
@@ -36,15 +39,15 @@ article{
     padding-top: 15px;
     padding-bottom: 15px;
 }
-.mensagem{
+.message{
     background: #FFFFFF;
     border-radius: 2px;
 }
-.mensagem-reservada{
+.private_message{
     background: #FFDEDE;
     border-radius: 2px;
 }
-.entrou-na-sala{
+.status{
     background: #DCDCDC;
     border-radius: 2px;
 }
@@ -91,7 +94,6 @@ footer ion-icon{
     margin-right: 18px;
 }
 aside{
-    overflow: hidden;
     z-index: 2;
     position: relative;
     display: flex;
@@ -154,4 +156,7 @@ aside input::placeholder::-ms-input-placeholder:-ms-input-placeholder{
 }
 .none{
     display: none;
+}
+.overflow{
+    overflow: hidden;
 }
