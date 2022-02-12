@@ -66,10 +66,20 @@ function enviarMensagem(){
                 type: "message"
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    mensagemEnviada.then(apagarInput);
+    mensagemEnviada.then();
     mensagemEnviada.catch(recarregarPagina);
     document.querySelector("footer input").value = "";
 }
 function recarregarPagina(){
     window.location.reload();
 }
+window.addEventListener('keyup', event => {
+    
+    if (event.code === 'NumpadEnter' || event.code === 'Enter'){
+        if(document.querySelector("footer input").value !== ''){
+            enviarMensagem();
+        }else if(document.querySelector("aside input").value !== ''){
+            pegarNome();
+        }
+    }
+});
