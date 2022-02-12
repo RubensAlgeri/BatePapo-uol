@@ -9,6 +9,8 @@ let mensagemAEnviar;
 let nomeDestinatario = "Todos";
 let mensagem1 = [];
 let buscarMensagens;
+let promessaUsuariosOnline;
+let usuariosOnline = [];
 
 function pegarNome(){
     nomeUsuario = document.querySelector("aside input").value;
@@ -54,18 +56,7 @@ function classificarMensagem(mensagem){
         }
     }
 )
-}
-// function mostrarMensagem(mensagem){
-//     if(nomeUsuario === mensagem.to || nomeUsuario === mensagem.from || mensagem.to === 'Todos'){
-//         document.querySelector('main').add(`<article class="${mensagem.type}">
-//         <p data-identifier="message"><em>${mensagem.time}</em>  <strong>${mensagem.from}</strong> para <strong>${mensagem.to}</strong>:  ${mensagem.text}</p>
-//         </article>`);
-
-
-//     const elementoQueQueroQueApareca = document.querySelector('p');
-//     elementoQueQueroQueApareca.scrollIntoView();
-//     }
-// }   
+} 
 function enviarMensagem(){
     mensagemAEnviar = {
                 from: nomeUsuario,
@@ -74,12 +65,39 @@ function enviarMensagem(){
                 type: "message"
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    mensagemEnviada.then(classificarMensagem);
+    mensagemEnviada.then();
     mensagemEnviada.catch(recarregarPagina);
     document.querySelector("footer input").value = "";
 }
 function recarregarPagina(){
     window.location.reload();
+}
+
+function mostrarBarraLateral(){
+    document.querySelector(".usuarios-online").classList.remove("none");
+    document.querySelector("body").classList.add("background-escuro");
+    setInterval(pegarUsuariosOnline, 5000);
+}
+function pegarUsuariosOnline(){
+    promessaUsuariosOnline = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
+    promessaUsuariosOnline.then(mostrarUsuariosOnline)
+}
+function mostrarUsuariosOnline(usuarios) {
+    usuariosOnline = usuarios.data;
+    document.querySelector('.usuarios').innerHTML = `
+    <h2>Escolha um contato para enviar mensagem:</h2>
+    <li>
+        <ion-icon name="people"></ion-icon>
+        <p>Todos</p>
+    </li>`;
+    usuariosOnline.forEach((element) => {
+
+        document.querySelector('.usuarios').innerHTML += `
+            <li>
+                <ion-icon name="person-circle"></ion-icon>
+                <p>${element.name}</p>
+            </li>`;
+    })
 }
 window.addEventListener('keyup', event => {
     

@@ -31,19 +31,34 @@
 <body class="overflow">
     <header>
         <img src="images/logo 1.png" alt="logo-pequeno">
-        <ion-icon name="people"></ion-icon>
+        <ion-icon onclick="mostrarBarraLateral()" name="people"></ion-icon>
     </header>
-    <!-- <ion-icon name="lock-closed"></ion-icon>
-    <ion-icon name="lock-open"></ion-icon>
-    <ion-icon name="person-circle"></ion-icon> -->
-    <aside>
+
+    <aside class="tela-login">
         <img src="images/logo 2.png" alt="logo-grande">
         <input data-identifier="enter-name" type="text" placeholder="Digite seu nome">
         <button data-identifier="start" onclick="pegarNome()">Entrar</button>
     </aside>
+
     <main>
 
     </main>
+
+    <aside class="usuarios-online none">
+        <section class="usuarios">
+        </section>
+        <section class="visibilidade">
+            <h2>Escolha a visibilidade</h2>
+            <li>
+                <ion-icon name="lock-open"></ion-icon>
+                <p>Público</p>
+            </li>
+            <li>
+                <ion-icon name="lock-closed"></ion-icon>
+                <p>Reservadamente</p>
+            </li>
+        </section>
+    </aside>
     <footer>
         <input type="text" placeholder="Escreva aqui...">
         <ion-icon data-identifier="send-message" onclick="enviarMensagem()" name="paper-plane-outline"></ion-icon>
