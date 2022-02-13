@@ -163,25 +163,21 @@ button{
 .usuarios-online{
     z-index: 4;
     position: fixed;
+    overflow: visible;
     top: 0;
     right: 0;
-    height: 100vh;
+    bottom: 0;
+    max-height: 1000vh;
     width: 259px;
     background-color: #FFFFFF;
+}
+.usuarios{
+    overflow-y: auto;
 }
 h2{
     padding: 25px;
     font-weight: 700;
     font-size: 16px;
-}
-.background-escuro{
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 3;
 }
 li{
     display: flex;
@@ -198,4 +194,12 @@ li p{
 }
 .visibilidade ion-icon{
     font-size: 22px;
+}
+.fundo-escuro{
+    background-color:rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
 }

@@ -11,6 +11,8 @@ let mensagem1 = [];
 let buscarMensagens;
 let promessaUsuariosOnline;
 let usuariosOnline = [];
+let visibilidadeDaMensagem = "message";
+let intervaloUsuariosOnline;
 
 function pegarNome(){
     nomeUsuario = document.querySelector("aside input").value;
@@ -62,7 +64,7 @@ function enviarMensagem(){
                 from: nomeUsuario,
                 to: nomeDestinatario,
                 text: document.querySelector("footer input").value,
-                type: "message"
+                type: visibilidadeDaMensagem
     };
     let mensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
     mensagemEnviada.then();
@@ -72,11 +74,18 @@ function enviarMensagem(){
 function recarregarPagina(){
     window.location.reload();
 }
+function fecharBarraLateral(){
+    document.querySelector(".fundo-escuro").removeAttribute("onclick");
+    document.querySelector(".usuarios-online").classList.add("none");
+    document.querySelector(".fundo-escuro").classList.add("none");
 
+    clearInterval(intervaloUsuariosOnline);
+}
 function mostrarBarraLateral(){
     document.querySelector(".usuarios-online").classList.remove("none");
-    document.querySelector("body").classList.add("background-escuro");
-    setInterval(pegarUsuariosOnline, 5000);
+    document.querySelector(".fundo-escuro").classList.remove("none");
+    document.querySelector(".fundo-escuro").setAttribute("onclick", "fecharBarraLateral();");
+    intervaloUsuariosOnline = setInterval(pegarUsuariosOnline, 5000);
 }
 function pegarUsuariosOnline(){
     promessaUsuariosOnline = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
@@ -86,18 +95,29 @@ function mostrarUsuariosOnline(usuarios) {
     usuariosOnline = usuarios.data;
     document.querySelector('.usuarios').innerHTML = `
     <h2>Escolha um contato para enviar mensagem:</h2>
-    <li>
+    <li onclick="selecionarUsuario(this)">
         <ion-icon name="people"></ion-icon>
         <p>Todos</p>
     </li>`;
     usuariosOnline.forEach((element) => {
 
         document.querySelector('.usuarios').innerHTML += `
-            <li>
+            <li onclick="selecionarUsuario(this)">
                 <ion-icon name="person-circle"></ion-icon>
                 <p>${element.name}</p>
             </li>`;
     })
+}
+function selecionarUsuario(elemento){
+    nomeDestinatario = elemento.querySelector("p").innerHTML;
+}
+function selecionarVisibilidade(elemento){
+    const visivel = elemento.querySelector("p").innerHTML;
+    if(visivel === "Reservadamente"){
+        visibilidadeDaMensagem = 'private_message';
+    }else{
+        visibilidadeDaMensagem = 'message';
+    }
 }
 window.addEventListener('keyup', event => {
     

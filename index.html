@@ -29,6 +29,7 @@
         <title>Bate-Papo Uol</title>
 </head>
 <body class="overflow">
+    <div class="fundo-escuro none"></div>
     <header>
         <img src="images/logo 1.png" alt="logo-pequeno">
         <ion-icon onclick="mostrarBarraLateral()" name="people"></ion-icon>
@@ -49,11 +50,11 @@
         </section>
         <section class="visibilidade">
             <h2>Escolha a visibilidade</h2>
-            <li>
+            <li onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Público</p>
             </li>
-            <li>
+            <li onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-closed"></ion-icon>
                 <p>Reservadamente</p>
             </li>
