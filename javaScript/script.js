@@ -7,6 +7,7 @@ let visibilidadeDaMensagem = "message";
 let checarVisibilidade;
 let focarMensagemNoChat;
 let ultimaMensagem = {time: 0};
+let visivelParaQuem = "publicamente";
 
 function conferirNomeDigitado() {
     nomeUsuario = document.querySelector("aside input").value;
@@ -32,6 +33,7 @@ function liberarAcesso() {
     setInterval(pegarMensagensDoServidor, 3000);
 
     pegarUsuariosOnline();
+    atualizarReservada();
 }
 function manterOnline() {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuarioObjeto)
@@ -120,9 +122,8 @@ function selecionarDestinatario(elemento) {
     deselecionar(elemento.parentNode);
     elemento.querySelector(".icone").classList.remove("none");
     nomeDestinatario = elemento.querySelector("p").innerHTML;
-    if (checarVisibilidade === "Reservadamente") {
-        atualizarReservada();
-    }
+
+    atualizarReservada();
 }
 function deselecionar(elemento) {
     const selec = elemento.querySelector(`.icone:not(.none)`);
@@ -136,17 +137,19 @@ function selecionarVisibilidade(elemento) {
 
     checarVisibilidade = elemento.querySelector("p").innerHTML;
     if (checarVisibilidade === "Reservadamente") {
+        visivelParaQuem = 'reservadamente';
         visibilidadeDaMensagem = 'private_message';
         document.querySelector(".msg").innerText =
-            `Enviando para ${nomeDestinatario} (reservadamente)`;
+            `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
     } else {
+        visivelParaQuem = "publicamente";
         visibilidadeDaMensagem = 'message';
-        document.querySelector(".msg").innerText = '';
+        document.querySelector(".msg").innerText = `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
     }
 }
 function atualizarReservada() {
     document.querySelector(".msg").innerText =
-        `Enviando para ${nomeDestinatario} (reservadamente)`;
+        `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
 }
 
 
