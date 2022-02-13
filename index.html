@@ -38,7 +38,7 @@
     <aside class="tela-login">
         <img src="images/logo 2.png" alt="logo-grande">
         <input data-identifier="enter-name" type="text" placeholder="Digite seu nome">
-        <button data-identifier="start" onclick="pegarNome()">Entrar</button>
+        <button data-identifier="start" onclick="conferirNomeUsuario()">Entrar</button>
     </aside>
 
     <main>
@@ -68,7 +68,7 @@
             <input class="enviar-msg" type="text" placeholder="Escreva aqui...">
             <p class="msg"></p>
         </div>
-        <ion-icon data-identifier="send-message" onclick="enviarMensagem()" name="paper-plane-outline"></ion-icon>
+        <ion-icon data-identifier="send-message" onclick="enviarMensagemParaServidor()" name="paper-plane-outline"></ion-icon>
     </footer>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
