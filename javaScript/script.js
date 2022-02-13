@@ -33,6 +33,7 @@ function liberarPagina(){
     document.querySelector("aside").classList.add("none");
     document.querySelector("body").classList.remove("overflow");
     verificacao = setInterval(manterOnline, 5000);
+    intervaloUsuariosOnline = setInterval(pegarUsuariosOnline, 10000);
     buscarMensagens = setInterval(pegarMensagens, 3000);
 }
 function manterOnline(){
@@ -85,7 +86,6 @@ function mostrarBarraLateral(){
     document.querySelector(".usuarios-online").classList.remove("none");
     document.querySelector(".fundo-escuro").classList.remove("none");
     document.querySelector(".fundo-escuro").setAttribute("onclick", "fecharBarraLateral();");
-    intervaloUsuariosOnline = setInterval(pegarUsuariosOnline, 5000);
 }
 function pegarUsuariosOnline(){
     promessaUsuariosOnline = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
@@ -95,23 +95,36 @@ function mostrarUsuariosOnline(usuarios) {
     usuariosOnline = usuarios.data;
     document.querySelector('.usuarios').innerHTML = `
     <h2>Escolha um contato para enviar mensagem:</h2>
-    <li onclick="selecionarUsuario(this)">
+    <li data-identifier="participant" onclick="selecionarUsuario(this)">
         <ion-icon name="people"></ion-icon>
         <p>Todos</p>
+        <ion-icon class="none"name="checkmark-outline"></ion-icon>
     </li>`;
     usuariosOnline.forEach((element) => {
 
         document.querySelector('.usuarios').innerHTML += `
-            <li onclick="selecionarUsuario(this)">
+            <li data-identifier="participant" onclick="selecionarUsuario(this)">
                 <ion-icon name="person-circle"></ion-icon>
                 <p>${element.name}</p>
+                <ion-icon class="none icone" name="checkmark-outline"></ion-icon>
             </li>`;
     })
 }
 function selecionarUsuario(elemento){
+    deselecionarUsuario(elemento.parentNode);
+    elemento.querySelector(".icone").classList.remove("none");
     nomeDestinatario = elemento.querySelector("p").innerHTML;
 }
+function deselecionarUsuario(elemento){
+    const selec = elemento.querySelector(`.icone:not(.none)`);
+    if (selec !== null) {
+        selec.classList.add("none");
+    }
+}
 function selecionarVisibilidade(elemento){
+    deselecionarUsuario(elemento.parentNode);
+    elemento.querySelector(".icone").classList.remove("none");
+
     const visivel = elemento.querySelector("p").innerHTML;
     if(visivel === "Reservadamente"){
         visibilidadeDaMensagem = 'private_message';

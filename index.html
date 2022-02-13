@@ -50,13 +50,15 @@
         </section>
         <section class="visibilidade">
             <h2>Escolha a visibilidade</h2>
-            <li onclick="selecionarVisibilidade(this)">
+            <li data-identifier="visibility" onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Público</p>
+                <ion-icon class="none icone" name="checkmark-outline"></ion-icon>
             </li>
-            <li onclick="selecionarVisibilidade(this)">
+            <li data-identifier="visibility" onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-closed"></ion-icon>
                 <p>Reservadamente</p>
+                <ion-icon class="none icone" name="checkmark-outline"></ion-icon>
             </li>
         </section>
     </aside>
