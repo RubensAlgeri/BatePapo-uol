@@ -167,7 +167,6 @@ button{
     top: 0;
     right: 0;
     bottom: 0;
-    max-height: 1000vh;
     width: 259px;
     background-color: #FFFFFF;
 }
@@ -194,6 +193,9 @@ li{
     right: 6.2%;
 }
 li p{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding-top: 10px;
     padding-bottom: 10px;
     line-height: 18.75px;

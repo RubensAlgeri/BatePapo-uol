@@ -2,12 +2,16 @@ let nomeUsuario;
 let nomeUsuarioObjeto;
 let nomeDestinatario = "Todos";
 let mensagemArray = [];
-let buscarMensagens;
 let usuariosOnline = [];
 let visibilidadeDaMensagem = "message";
-let intervaloUsuariosOnline;
 let checarVisibilidade;
 let focarMensagemNoChat;
+let ultimaMensagem = {
+    time: 0
+};
+
+// Ajeitar scrollintoview só quando houver mensagens novas
+
 
 function conferirNomeUsuario() {
     nomeUsuario = document.querySelector("aside input").value;
@@ -25,12 +29,14 @@ function checarErro(erro) {
     }
 }
 function liberarAcesso() {
-    pegarUsuariosOnline();
     document.querySelector("aside").classList.add("none");
     document.querySelector("body").classList.remove("overflow");
+    
     setInterval(manterOnline, 5000);
-    intervaloUsuariosOnline = setInterval(pegarUsuariosOnline, 10000);
-    buscarMensagens = setInterval(pegarMensagensDoServidor, 3000);
+    setInterval(pegarUsuariosOnline, 10000);
+    setInterval(pegarMensagensDoServidor, 3000);
+
+    pegarUsuariosOnline();
 }
 function manterOnline() {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuarioObjeto)
@@ -39,6 +45,10 @@ function pegarMensagensDoServidor() {
     let promessaMensagens = axios.get('https://mock-api.driven.com.br/api/v4/uol/messages');
     promessaMensagens.then(imprimirMensagensNaTela);
 }
+
+
+// Ajeitar scrollintoview só quando houver mensagens novas
+
 function imprimirMensagensNaTela(mensagem) {
     mensagemArray = mensagem.data;
     document.querySelector('main').innerHTML = '';
@@ -49,14 +59,22 @@ function imprimirMensagensNaTela(mensagem) {
             <p data-identifier="message"><em>${element.time}</em>  <strong>${element.from}</strong> para <strong>${element.to}</strong>:  ${element.text}</p>
             </article>`);
 
+            // console.log(ultimaMensagem);
+            // console.log(mensagemArray[mensagemArray.length - 1]);
+
+            if(mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time){
+
             focarMensagemNoChat = document.querySelector('main').lastChild;
             focarMensagemNoChat.scrollIntoView();
+
+            }
         }
+        
 
-    }
-    )
-
+    });
+    ultimaMensagem = mensagemArray[mensagemArray.length - 1];
 }
+
 function enviarMensagemParaServidor() {
     let mensagemAEnviar = {
         from: nomeUsuario,
@@ -144,7 +162,7 @@ window.addEventListener('keyup', event => {
     if (event.code === 'NumpadEnter' || event.code === 'Enter') {
         if (document.querySelector(".enviar-msg").value !== '') {
             enviarMensagemParaServidor();
-        }else if (document.querySelector(".tela-login input").value !== ''){
+        } else if (document.querySelector(".tela-login input").value !== '') {
             conferirNomeUsuario();
         }
     }
