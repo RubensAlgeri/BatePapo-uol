@@ -6,14 +6,9 @@ let usuariosOnline = [];
 let visibilidadeDaMensagem = "message";
 let checarVisibilidade;
 let focarMensagemNoChat;
-let ultimaMensagem = {
-    time: 0
-};
+let ultimaMensagem = {time: 0};
 
-// Ajeitar scrollintoview só quando houver mensagens novas
-
-
-function conferirNomeUsuario() {
+function conferirNomeDigitado() {
     nomeUsuario = document.querySelector("aside input").value;
     nomeUsuarioObjeto = {
         name: nomeUsuario
@@ -47,8 +42,6 @@ function pegarMensagensDoServidor() {
 }
 
 
-// Ajeitar scrollintoview só quando houver mensagens novas
-
 function imprimirMensagensNaTela(mensagem) {
     mensagemArray = mensagem.data;
     document.querySelector('main').innerHTML = '';
@@ -59,20 +52,21 @@ function imprimirMensagensNaTela(mensagem) {
             <p data-identifier="message"><em>${element.time}</em>  <strong>${element.from}</strong> para <strong>${element.to}</strong>:  ${element.text}</p>
             </article>`);
 
-            // console.log(ultimaMensagem);
-            // console.log(mensagemArray[mensagemArray.length - 1]);
-
-            if(mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time){
-
-            focarMensagemNoChat = document.querySelector('main').lastChild;
-            focarMensagemNoChat.scrollIntoView();
-
-            }
+            seMensagemNovaScrollarChat();
         }
         
 
     });
     ultimaMensagem = mensagemArray[mensagemArray.length - 1];
+}
+
+function seMensagemNovaScrollarChat(){
+    if(mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time){
+
+        focarMensagemNoChat = document.querySelector('main').lastChild;
+        focarMensagemNoChat.scrollIntoView();
+
+        }
 }
 
 function enviarMensagemParaServidor() {
@@ -163,7 +157,7 @@ window.addEventListener('keyup', event => {
         if (document.querySelector(".enviar-msg").value !== '') {
             enviarMensagemParaServidor();
         } else if (document.querySelector(".tela-login input").value !== '') {
-            conferirNomeUsuario();
+            conferirNomeDigitado();
         }
     }
 });

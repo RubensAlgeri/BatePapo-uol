@@ -61,6 +61,10 @@ p{
     margin-left: 8px;
     margin-right: 9px;
 }
+article p {
+    overflow: hidden;
+    word-break: break-all;
+}
 strong{
     font-weight: 700;
 }
@@ -195,7 +199,7 @@ li{
 li p{
     width: 150px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    word-break: break-all;
     padding-top: 10px;
     padding-bottom: 10px;
     line-height: 18.75px;
