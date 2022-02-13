@@ -4,6 +4,7 @@ body{
     font-weight: 400;
     background-color: #E5E5E5;
     position: relative;
+    overflow: hidden;
 }
 header{
     z-index: 1;
@@ -13,6 +14,7 @@ header{
     position: fixed;
     top: 0;
     right: 0;
+    overflow: hidden;
     left: 0;
     height: 80px;
     background: #FFFFFF;
@@ -28,8 +30,10 @@ header ion-icon{
     margin-right: 21px;
 }
 main{
-    margin-bottom: 80px;
+    height: calc(100vh - 186px);
     margin-top: 106px;
+    margin-bottom: 80px;
+    overflow: scroll;
     overflow-x: hidden;
 }
 article{
@@ -69,11 +73,11 @@ footer{
     align-items: center;
     justify-content: space-between;
     position: fixed;
+    overflow: hidden;
     bottom: 0;
     right: 0;
     left: 0;
     height: 80px;
-    margin-top: 80px;
     background: #FFFFFF;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
 }
@@ -168,6 +172,8 @@ button{
     background-color: #FFFFFF;
 }
 .usuarios{
+    max-height: 400px;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 h2{

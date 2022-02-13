@@ -14,6 +14,7 @@ let usuariosOnline = [];
 let visibilidadeDaMensagem = "message";
 let intervaloUsuariosOnline;
 let visivel;
+let elementoQueQueroQueApareca;
 
 function pegarNome() {
     nomeUsuario = document.querySelector("aside input").value;
@@ -53,11 +54,14 @@ function classificarMensagem(mensagem) {
             document.querySelector('main').innerHTML += (`<article class="${element.type}">
             <p data-identifier="message"><em>${element.time}</em>  <strong>${element.from}</strong> para <strong>${element.to}</strong>:  ${element.text}</p>
             </article>`);
+
+            elementoQueQueroQueApareca = document.querySelector('main').lastChild;
+            elementoQueQueroQueApareca.scrollIntoView();
         }
-        const elementoQueQueroQueApareca = document.querySelector('main');
-        elementoQueQueroQueApareca.scrollIntoView(false);
+
     }
     )
+
 }
 function enviarMensagem() {
     mensagemAEnviar = {
@@ -93,7 +97,6 @@ function pegarUsuariosOnline() {
 function mostrarUsuariosOnline(usuarios) {
     usuariosOnline = usuarios.data;
     document.querySelector('.usuarios').innerHTML = `
-    <h2>Escolha um contato para enviar mensagem:</h2>
     <li data-identifier="participant" onclick="selecionarUsuario(this)">
         <ion-icon name="people"></ion-icon>
         <p>Todos</p>
