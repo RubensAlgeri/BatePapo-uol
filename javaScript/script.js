@@ -1,5 +1,4 @@
-let nomeUsuario;
-let nomeUsuarioObjeto;
+let nomeUsuario = {name: ''};
 let nomeDestinatario = "Todos";
 let mensagemArray = [];
 let usuariosOnline = [];
@@ -12,12 +11,11 @@ let visivelParaQuem = "publicamente";
 enviarMsgTeclaEnter();
 
 function conferirNomeDigitado() {
-    nomeUsuario = document.querySelector("aside input").value;
-    nomeUsuarioObjeto = {
-        name: nomeUsuario
-    }
+    nomeUsuario = {
+        name: document.querySelector("aside input").value
+    };
 
-    let promessaEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', nomeUsuarioObjeto);
+    let promessaEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', nomeUsuario);
     promessaEnviada.catch(checarErro);
     promessaEnviada.then(liberarAcesso);
 }
@@ -41,7 +39,7 @@ function liberarAcesso() {
 }
 
 function manterOnline() {
-    axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuarioObjeto)
+    axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuario)
 }
 
 function pegarMensagensDoServidor() {
@@ -78,7 +76,7 @@ function seMensagemNovaScrollarChat(){
 
 function enviarMensagemParaServidor() {
     let mensagemAEnviar = {
-        from: nomeUsuario,
+        from: nomeUsuario.name,
         to: nomeDestinatario,
         text: document.querySelector("footer input").value,
         type: visibilidadeDaMensagem

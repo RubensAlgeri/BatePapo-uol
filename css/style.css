@@ -44,6 +44,8 @@ article{
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
+/* estas 3 classes estão em ingles para poder utilizar a informação do servidor diretamente */
 .message{
     background: #FFFFFF;
     border-radius: 2px;
@@ -56,6 +58,7 @@ article{
     background: #DCDCDC;
     border-radius: 2px;
 }
+/* -------------------------------------------------------------- */
 p{
     font-size: 14px;
     margin-left: 8px;
