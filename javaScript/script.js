@@ -7,7 +7,7 @@ let checarVisibilidade;
 let focarMensagemNoChat;
 let ultimaMensagem = { time: 0 };
 let visivelParaQuem = "publicamente";
-let x;
+let intevaloPegarMsg;
 
 enviarMsgTeclaEnter();
 
@@ -33,7 +33,7 @@ function liberarAcesso() {
 
     setInterval(manterOnline, 5000);
     setInterval(pegarUsuariosOnline, 10000);
-    x = setInterval(pegarMensagensDoServidor, 3000);
+    intevaloPegarMsg = setInterval(pegarMensagensDoServidor, 3000);
 
     pegarUsuariosOnline();
     atualizarReservada();
@@ -44,9 +44,9 @@ function manterOnline() {
 }
 
 function envioAutomatico(){
-    clearInterval(x);
+    clearInterval(intevaloPegarMsg);
     pegarMensagensDoServidor();
-    setInterval(x, 3000);
+    intevaloPegarMsg = setInterval(pegarMensagensDoServidor, 3000);
 }
 
 function pegarMensagensDoServidor() {
@@ -89,7 +89,7 @@ function enviarMensagemParaServidor() {
         type: visibilidadeDaMensagem
     };
     let promessaMensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    promessaMensagemEnviada.then(pegarMensagensDoServidor);
+    promessaMensagemEnviada.then(envioAutomatico);
     promessaMensagemEnviada.catch(recarregarPaginaAoDesconectar);
     document.querySelector(".enviar-msg").value = "";
 }
