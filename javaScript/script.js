@@ -7,6 +7,7 @@ let checarVisibilidade;
 let focarMensagemNoChat;
 let ultimaMensagem = { time: 0 };
 let visivelParaQuem = "publicamente";
+let x;
 
 enviarMsgTeclaEnter();
 
@@ -32,7 +33,7 @@ function liberarAcesso() {
 
     setInterval(manterOnline, 5000);
     setInterval(pegarUsuariosOnline, 10000);
-    setInterval(pegarMensagensDoServidor, 3000);
+    x = setInterval(pegarMensagensDoServidor, 3000);
 
     pegarUsuariosOnline();
     atualizarReservada();
@@ -40,6 +41,12 @@ function liberarAcesso() {
 
 function manterOnline() {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuario)
+}
+
+function envioAutomatico(){
+    clearInterval(x);
+    pegarMensagensDoServidor();
+    setInterval(x, 3000);
 }
 
 function pegarMensagensDoServidor() {
@@ -52,7 +59,7 @@ function imprimirMensagensNaTela(mensagem) {
     document.querySelector('main').innerHTML = '';
 
     mensagemArray.forEach((element) => {
-        if (nomeUsuario === element.to || nomeUsuario === element.from || element.to === 'Todos') {
+        if (nomeUsuario.name === element.to || nomeUsuario.name === element.from || element.to === 'Todos') {
             document.querySelector('main').innerHTML += (`<article class="${element.type}">
             <p data-identifier="message"><em>${element.time}</em>  <strong>${element.from}</strong> para <strong>${element.to}</strong>:  ${element.text}</p>
             </article>`);
@@ -69,7 +76,7 @@ function seMensagemNovaScrollarChat() {
     if (mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time) {
 
         focarMensagemNoChat = document.querySelector('main').lastChild;
-        focarMensagemNoChat.scrollIntoView();
+        focarMensagemNoChat.scrollIntoView({ behavior: 'smooth'});
 
     }
 }
@@ -78,13 +85,13 @@ function enviarMensagemParaServidor() {
     let mensagemAEnviar = {
         from: nomeUsuario.name,
         to: nomeDestinatario,
-        text: document.querySelector("footer input").value,
+        text: document.querySelector(".enviar-msg").value,
         type: visibilidadeDaMensagem
     };
     let promessaMensagemEnviada = axios.post('https://mock-api.driven.com.br/api/v4/uol/messages', mensagemAEnviar);
-    promessaMensagemEnviada.then();
+    promessaMensagemEnviada.then(pegarMensagensDoServidor);
     promessaMensagemEnviada.catch(recarregarPaginaAoDesconectar);
-    document.querySelector("footer input").value = "";
+    document.querySelector(".enviar-msg").value = "";
 }
 
 function recarregarPaginaAoDesconectar() {
