@@ -1,11 +1,11 @@
-let nomeUsuario = {name: ''};
+let nomeUsuario = { name: '' };
 let nomeDestinatario = "Todos";
 let mensagemArray = [];
 let usuariosOnline = [];
 let visibilidadeDaMensagem = "message";
 let checarVisibilidade;
 let focarMensagemNoChat;
-let ultimaMensagem = {time: 0};
+let ultimaMensagem = { time: 0 };
 let visivelParaQuem = "publicamente";
 
 enviarMsgTeclaEnter();
@@ -29,7 +29,7 @@ function checarErro(erro) {
 function liberarAcesso() {
     document.querySelector("aside").classList.add("none");
     document.querySelector("body").classList.remove("overflow");
-    
+
     setInterval(manterOnline, 5000);
     setInterval(pegarUsuariosOnline, 10000);
     setInterval(pegarMensagensDoServidor, 3000);
@@ -59,19 +59,19 @@ function imprimirMensagensNaTela(mensagem) {
 
             seMensagemNovaScrollarChat();
         }
-        
+
 
     });
     ultimaMensagem = mensagemArray[mensagemArray.length - 1];
 }
 
-function seMensagemNovaScrollarChat(){
-    if(mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time){
+function seMensagemNovaScrollarChat() {
+    if (mensagemArray[mensagemArray.length - 1].time !== ultimaMensagem.time) {
 
         focarMensagemNoChat = document.querySelector('main').lastChild;
         focarMensagemNoChat.scrollIntoView();
 
-        }
+    }
 }
 
 function enviarMensagemParaServidor() {
@@ -164,15 +164,15 @@ function atualizarReservada() {
         `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
 }
 
-function enviarMsgTeclaEnter(){
-window.addEventListener('keyup', event => {
+function enviarMsgTeclaEnter() {
+    window.addEventListener('keyup', event => {
 
-    if (event.code === 'NumpadEnter' || event.code === 'Enter') {
-        if (document.querySelector(".enviar-msg").value !== '') {
-            enviarMensagemParaServidor();
-        } else if (document.querySelector(".tela-login input").value !== '') {
-            conferirNomeDigitado();
+        if (event.code === 'NumpadEnter' || event.code === 'Enter') {
+            if (document.querySelector(".enviar-msg").value !== '') {
+                enviarMensagemParaServidor();
+            } else if (document.querySelector(".tela-login input").value !== '') {
+                conferirNomeDigitado();
+            }
         }
-    }
-});
+    });
 }

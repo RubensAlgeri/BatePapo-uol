@@ -26,43 +26,56 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-        <title>Bate-Papo Uol</title>
+    <title>Bate-Papo Uol</title>
 </head>
+
 <body>
 
-    <div class="fundo-escuro none"></div>
     <header>
         <img src="images/logo 1.png" alt="logo-pequeno">
         <ion-icon onclick="mostrarBarraLateral()" name="people"></ion-icon>
     </header>
 
     <aside class="tela-login">
+
         <img src="images/logo 2.png" alt="logo-grande">
         <input class="digitar-nome" data-identifier="enter-name" type="text" placeholder="Digite seu nome">
         <button data-identifier="start" onclick="conferirNomeDigitado()">Entrar</button>
+
     </aside>
 
     <main>
     </main>
 
     <aside class="usuarios-online none">
+
         <h2>Escolha um contato para enviar mensagem:</h2>
+
         <section class="usuarios">
         </section>
+
         <section class="visibilidade">
+
             <h2>Escolha a visibilidade</h2>
+
             <li data-identifier="visibility" onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Público</p>
                 <ion-icon class=" icone" name="checkmark-outline"></ion-icon>
             </li>
+
             <li data-identifier="visibility" onclick="selecionarVisibilidade(this)">
                 <ion-icon name="lock-closed"></ion-icon>
                 <p>Reservadamente</p>
                 <ion-icon class="none icone" name="checkmark-outline"></ion-icon>
             </li>
+
         </section>
+
     </aside>
+
+    <div class="fundo-escuro none"></div>
+
     <footer>
         <div class="container">
             <input class="enviar-msg" type="text" placeholder="Escreva aqui...">
@@ -75,4 +88,5 @@
     <script src="javaScript/script.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
+
 </html>
