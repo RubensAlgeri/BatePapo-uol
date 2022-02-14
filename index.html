@@ -28,7 +28,8 @@
     <meta name="theme-color" content="#ffffff">
         <title>Bate-Papo Uol</title>
 </head>
-<body class="overflow">
+<body>
+
     <div class="fundo-escuro none"></div>
     <header>
         <img src="images/logo 1.png" alt="logo-pequeno">
@@ -37,12 +38,11 @@
 
     <aside class="tela-login">
         <img src="images/logo 2.png" alt="logo-grande">
-        <input data-identifier="enter-name" type="text" placeholder="Digite seu nome">
+        <input class="digitar-nome" data-identifier="enter-name" type="text" placeholder="Digite seu nome">
         <button data-identifier="start" onclick="conferirNomeDigitado()">Entrar</button>
     </aside>
 
     <main>
-
     </main>
 
     <aside class="usuarios-online none">
@@ -66,7 +66,7 @@
     <footer>
         <div class="container">
             <input class="enviar-msg" type="text" placeholder="Escreva aqui...">
-            <p class="msg"></p>
+            <p class="msg-visibilidade"></p>
         </div>
         <ion-icon data-identifier="send-message" onclick="enviarMensagemParaServidor()" name="paper-plane-outline"></ion-icon>
     </footer>

@@ -9,6 +9,8 @@ let focarMensagemNoChat;
 let ultimaMensagem = {time: 0};
 let visivelParaQuem = "publicamente";
 
+enviarMsgTeclaEnter();
+
 function conferirNomeDigitado() {
     nomeUsuario = document.querySelector("aside input").value;
     nomeUsuarioObjeto = {
@@ -19,11 +21,13 @@ function conferirNomeDigitado() {
     promessaEnviada.catch(checarErro);
     promessaEnviada.then(liberarAcesso);
 }
+
 function checarErro(erro) {
     if (erro.response.status === 400) {
         alert("Esse nome já esta sendo utilizado, escolha outro por favor.")
     }
 }
+
 function liberarAcesso() {
     document.querySelector("aside").classList.add("none");
     document.querySelector("body").classList.remove("overflow");
@@ -35,14 +39,15 @@ function liberarAcesso() {
     pegarUsuariosOnline();
     atualizarReservada();
 }
+
 function manterOnline() {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/status', nomeUsuarioObjeto)
 }
+
 function pegarMensagensDoServidor() {
     let promessaMensagens = axios.get('https://mock-api.driven.com.br/api/v4/uol/messages');
     promessaMensagens.then(imprimirMensagensNaTela);
 }
-
 
 function imprimirMensagensNaTela(mensagem) {
     mensagemArray = mensagem.data;
@@ -83,23 +88,28 @@ function enviarMensagemParaServidor() {
     promessaMensagemEnviada.catch(recarregarPaginaAoDesconectar);
     document.querySelector("footer input").value = "";
 }
+
 function recarregarPaginaAoDesconectar() {
     window.location.reload();
 }
+
 function fecharBarraLateral() {
     document.querySelector(".fundo-escuro").removeAttribute("onclick");
     document.querySelector(".usuarios-online").classList.add("none");
     document.querySelector(".fundo-escuro").classList.add("none");
 }
+
 function mostrarBarraLateral() {
     document.querySelector(".usuarios-online").classList.remove("none");
     document.querySelector(".fundo-escuro").classList.remove("none");
     document.querySelector(".fundo-escuro").setAttribute("onclick", "fecharBarraLateral();");
 }
+
 function pegarUsuariosOnline() {
     let promessaUsuariosOnline = axios.get('https://mock-api.driven.com.br/api/v4/uol/participants');
     promessaUsuariosOnline.then(mostrarUsuariosOnline)
 }
+
 function mostrarUsuariosOnline(usuarios) {
     usuariosOnline = usuarios.data;
     document.querySelector('.usuarios').innerHTML = `
@@ -118,6 +128,7 @@ function mostrarUsuariosOnline(usuarios) {
             </li>`;
     })
 }
+
 function selecionarDestinatario(elemento) {
     deselecionar(elemento.parentNode);
     elemento.querySelector(".icone").classList.remove("none");
@@ -125,12 +136,14 @@ function selecionarDestinatario(elemento) {
 
     atualizarReservada();
 }
+
 function deselecionar(elemento) {
     const selec = elemento.querySelector(`.icone:not(.none)`);
     if (selec !== null) {
         selec.classList.add("none");
     }
 }
+
 function selecionarVisibilidade(elemento) {
     deselecionar(elemento.parentNode);
     elemento.querySelector(".icone").classList.remove("none");
@@ -139,21 +152,21 @@ function selecionarVisibilidade(elemento) {
     if (checarVisibilidade === "Reservadamente") {
         visivelParaQuem = 'reservadamente';
         visibilidadeDaMensagem = 'private_message';
-        document.querySelector(".msg").innerText =
+        document.querySelector(".msg-visibilidade").innerText =
             `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
     } else {
         visivelParaQuem = "publicamente";
         visibilidadeDaMensagem = 'message';
-        document.querySelector(".msg").innerText = `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
+        document.querySelector(".msg-visibilidade").innerText = `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
     }
 }
+
 function atualizarReservada() {
-    document.querySelector(".msg").innerText =
+    document.querySelector(".msg-visibilidade").innerText =
         `Enviando para ${nomeDestinatario} (${visivelParaQuem})`;
 }
 
-
-// CODIGO PARA ENVIAR MENSAGEM COM A TECLA ENTER
+function enviarMsgTeclaEnter(){
 window.addEventListener('keyup', event => {
 
     if (event.code === 'NumpadEnter' || event.code === 'Enter') {
@@ -164,3 +177,4 @@ window.addEventListener('keyup', event => {
         }
     }
 });
+}
